@@ -5,13 +5,17 @@ import {
   Bus,
   ChevronRight,
   Coffee,
+  Compass,
   Facebook,
+  Globe,
   Hotel,
   MapPin,
   MessageCircle,
+  Palmtree,
   ShieldCheck,
   Sparkles,
   Sun,
+  TreePine,
   UtensilsCrossed,
   Waves,
 } from "lucide-react";
@@ -23,6 +27,9 @@ import { WhatsAppButton } from "@/components/orion/WhatsAppButton";
 import heroRio from "@/assets/hero-rio.jpg";
 import rioCard from "@/assets/rio-card.jpg";
 import spCard from "@/assets/sao-paulo-card.jpg";
+import florianopolisCard from "@/assets/florianopolis-card.png";
+import salvadorCard from "@/assets/salvador-card.png";
+import iguacuCard from "@/assets/iguacu-card.png";
 import bahamasCard from "@/assets/bahamas-card.png";
 import bahamasResort from "@/assets/bahamas-resort.png";
 
@@ -33,13 +40,13 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "Descubrí la magia de Brasil y Las Bahamas con la seguridad que mereces. Paquetes completos a Río de Janeiro, São Paulo y Bahamas: transporte, hoteles 5 estrellas y todas las comidas.",
+          "Descubrí la magia de Brasil y Las Bahamas con la seguridad que mereces. Paquetes completos a Río de Janeiro, São Paulo, Florianópolis, Salvador, Iguaçu y Bahamas.",
       },
       { property: "og:title", content: "Orion Tours | Viajes seguros a Brasil y Las Bahamas" },
       {
         property: "og:description",
         content:
-          "Río de Janeiro, São Paulo y Las Bahamas con logística experta, guías seguros y paquete todo incluido para la familia.",
+          "Río de Janeiro, São Paulo, Florianópolis, Salvador de Bahía, Foz do Iguaçu y Las Bahamas con logística experta, guías seguros y paquete todo incluido.",
       },
     ],
   }),
@@ -64,27 +71,81 @@ const razones = [
   },
 ];
 
+type CategoryId = "all" | "brasil" | "caribe" | "naturaleza";
+
+const filterCategories = [
+  { id: "all", label: "Todos los Destinos", icon: Globe, count: 6 },
+  { id: "brasil", label: "Brasil (Capitales & Playas)", icon: Compass, count: 4 },
+  { id: "caribe", label: "Caribe & Bahamas", icon: Palmtree, count: 1 },
+  { id: "naturaleza", label: "Maravillas Naturales", icon: TreePine, count: 1 },
+];
+
 const destinos = [
   {
+    id: "rio",
+    category: "brasil",
+    categoryLabel: "Brasil • Rio de Janeiro",
     img: rioCard,
-    kicker: "Destino 01",
+    kicker: "Destino 01 • Capital Carioca",
     title: "Río de Janeiro: La Ciudad Maravillosa",
     badges: ["Playas icónicas", "Cristo Redentor", "Vida Nocturna"],
     text: "Siente la brisa en Copacabana e Ipanema. Te llevamos a los puntos estratégicos para unas fotos increíbles y una inmersión total en la cultura carioca, siempre con guías seguros.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Río%20de%20Janeiro.",
   },
   {
+    id: "sp",
+    category: "brasil",
+    categoryLabel: "Brasil • São Paulo",
     img: spCard,
-    kicker: "Destino 02",
+    kicker: "Destino 02 • Megaciudad",
     title: "São Paulo: El Corazón Cosmopolita",
-    badges: ["Gastronomía Mundial", "Cultura", "Compras"],
+    badges: ["Gastronomía Mundial", "Cultura & Museos", "Shopping Premium"],
     text: "Explora la metrópolis vibrante. Desde el Parque Ibirapuera hasta la Avenida Paulista, descubre los secretos y curiosidades de la ciudad que nunca duerme con nuestra logística experta.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20São%20Paulo.",
   },
   {
+    id: "florianopolis",
+    category: "brasil",
+    categoryLabel: "Brasil • Santa Catarina",
+    img: florianopolisCard,
+    kicker: "Destino 03 • Isla de la Magia",
+    title: "Florianópolis: Playas Paradisiacas y Naturaleza",
+    badges: ["42 Playas de Ensueño", "Surf & Dunas", "Relax Familiar"],
+    text: "La capital de Santa Catarina lo tiene todo: playas de agua cristalina como Jurerê e Joaquina, gastronomía marina de primer nivel y un entorno súper seguro para disfrutar en familia.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Florianópolis.",
+  },
+  {
+    id: "salvador",
+    category: "brasil",
+    categoryLabel: "Brasil • Bahía",
+    img: salvadorCard,
+    kicker: "Destino 04 • Cuna de la Cultura",
+    title: "Salvador de Bahía: Historia, Color y Tradición",
+    badges: ["Pelourinho Histórico", "Playas Cálidas", "Cultura Afrobravileña"],
+    text: "Sumérgete en la magia colonial de Bahía. Camina por el Pelourinho, disfruta del faro da Barra y degusta la mejor gastronomía local en una aventura llena de alegría y seguridad.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Salvador%20de%20Bahía.",
+  },
+  {
+    id: "iguacu",
+    category: "naturaleza",
+    categoryLabel: "Brasil • Paraná",
+    img: iguacuCard,
+    kicker: "Destino 05 • Maravilla Mundial",
+    title: "Foz do Iguaçu: Cataratas Gigantes y Eco-Turismo",
+    badges: ["7 Maravillas Naturales", "Parque de las Aves", "Paseos en Barco"],
+    text: "Sorpréndete con una de las 7 Maravillas Naturales del Mundo. Un espectáculo de cascadas impresionante para toda la familia con excursiones guiadas, transporte y los mejores hoteles.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Foz%20do%20Iguaçu.",
+  },
+  {
+    id: "bahamas",
+    category: "caribe",
+    categoryLabel: "Caribe • Bahamas",
     img: bahamasCard,
-    kicker: "Destino 03 • Exclusivo",
+    kicker: "Destino 06 • Exclusivo Caribe",
     title: "Las Bahamas: El Paraíso del Caribe en Familia",
-    badges: ["Aguas Cristalinas", "Resorts 5 Estrellas", "Todo Incluido Familia"],
-    text: "Sumérgete en playas de arena blanca y aguas turquesas en Nassau y Exuma. Disfruta noches de lujo en los mejores hoteles con estancias ultra cómodas, desayunos, almuerzos y cenas servidas con la calidez de Orion Tours.",
+    badges: ["Aguas Turquesas", "Resorts 5 Estrellas", "Todo Incluido Familia"],
+    text: "Sumérgete en playas de arena blanca y aguas cristalinas en Nassau y Exuma. Disfruta noches de lujo en los mejores hoteles con estancias ultra cómodas, desayunos, almuerzos y cenas servidas.",
+    waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Las%20Bahamas.",
   },
 ];
 
@@ -97,11 +158,11 @@ const incluye = [
 
 function Index() {
   const [scrollY, setScrollY] = useState(0);
+  const [activeFilter, setActiveFilter] = useState<CategoryId>("all");
 
   useEffect(() => {
     let animationFrameId: number;
     const handleScroll = () => {
-      // Only track scroll if within reasonable range to save GPU cycles on mobile
       if (window.scrollY < 1200) {
         setScrollY(window.scrollY);
       }
@@ -115,6 +176,10 @@ function Index() {
       cancelAnimationFrame(animationFrameId);
     };
   }, []);
+
+  const filteredDestinos = activeFilter === "all"
+    ? destinos
+    : destinos.filter((d) => d.category === activeFilter);
 
   return (
     <div className="min-h-screen bg-background overflow-x-hidden">
@@ -150,7 +215,7 @@ function Index() {
 
             <Reveal delay={120}>
               <h1 className="mt-5 sm:mt-7 max-w-4xl text-3xl font-extrabold leading-[1.1] text-primary-foreground sm:text-5xl lg:text-7xl tracking-tight">
-                Descubrí Río, São Paulo y las paradisíacas{" "}
+                Descubrí las mejores capitales de Brasil y{" "}
                 <span className="bg-gradient-brand bg-clip-text text-transparent">
                   Bahamas en familia
                 </span>
@@ -159,9 +224,9 @@ function Index() {
 
             <Reveal delay={240}>
               <p className="mt-4 sm:mt-6 max-w-2xl text-sm leading-relaxed text-primary-foreground/90 sm:text-lg">
-                Desde las playas de Río y el dinamismo de São Paulo hasta el paraíso turquesa de
-                Las Bahamas. Hacemos de tu viaje familiar una experiencia inolvidable en los mejores
-                hoteles con desayuno, almuerzo, cena y máxima seguridad garantizada.
+                Río de Janeiro, São Paulo, Florianópolis, Salvador de Bahía, Cataratas del Iguaçu y Las Bahamas.
+                Hacemos de tu viaje familiar una experiencia inolvidable en los mejores hoteles con transporte,
+                desayuno, almuerzo, cena y máxima seguridad garantizada.
               </p>
             </Reveal>
 
@@ -169,7 +234,7 @@ function Index() {
               <div className="mt-8 sm:mt-10 flex flex-col gap-3.5 sm:flex-row">
                 <Button variant="hero" size="xl" className="w-full sm:w-auto justify-center shadow-glow active:scale-[0.98]" asChild>
                   <a href="#destinos">
-                    Ver Destinos <ArrowRight className="size-4" />
+                    Explorar 6 Destinos Estrella <ArrowRight className="size-4" />
                   </a>
                 </Button>
                 <Button variant="heroGhost" size="xl" className="w-full sm:w-auto justify-center active:scale-[0.98]" asChild>
@@ -240,9 +305,38 @@ function Index() {
               </h2>
             </Reveal>
 
-            <div className="mt-10 sm:mt-14 grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-              {destinos.map((d, idx) => (
-                <Reveal key={d.title} delay={idx * 150}>
+            {/* DYNAMIC FILTER TABS */}
+            <Reveal delay={100} className="mt-8">
+              <div className="flex flex-wrap items-center gap-2 border-b border-border/80 pb-4">
+                {filterCategories.map((cat) => (
+                  <button
+                    key={cat.id}
+                    onClick={() => setActiveFilter(cat.id as CategoryId)}
+                    className={`flex items-center gap-2 rounded-2xl px-4 py-2.5 text-xs sm:text-sm font-semibold transition-all duration-300 active:scale-95 ${
+                      activeFilter === cat.id
+                        ? "bg-primary text-primary-foreground shadow-soft"
+                        : "bg-card text-muted-foreground hover:bg-accent/10 hover:text-primary border border-border/80"
+                    }`}
+                  >
+                    <cat.icon className={`size-4 ${activeFilter === cat.id ? "text-accent" : "text-muted-foreground"}`} />
+                    <span>{cat.label}</span>
+                    <span
+                      className={`rounded-full px-2 py-0.5 text-[10px] font-extrabold ${
+                        activeFilter === cat.id
+                          ? "bg-accent text-accent-foreground"
+                          : "bg-muted text-foreground"
+                      }`}
+                    >
+                      {cat.count}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            </Reveal>
+
+            <div className="mt-8 sm:mt-12 grid gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+              {filteredDestinos.map((d, idx) => (
+                <Reveal key={d.id} delay={idx * 100}>
                   <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft transition-all duration-500 hover:-translate-y-2 hover:shadow-card active:scale-[0.99]">
                     <div className="relative h-56 overflow-hidden sm:h-72">
                       <img
@@ -259,6 +353,9 @@ function Index() {
                     </div>
 
                     <div className="flex flex-1 flex-col p-6 sm:p-8">
+                      <span className="text-[11px] font-bold uppercase tracking-wider text-accent mb-1">
+                        {d.categoryLabel}
+                      </span>
                       <h3 className="text-xl sm:text-2xl font-bold text-primary tracking-tight">{d.title}</h3>
 
                       <div className="mt-3.5 flex flex-wrap gap-1.5 sm:gap-2">
@@ -287,7 +384,11 @@ function Index() {
                       </div>
 
                       <Button variant="accent" size="lg" className="mt-6 w-full justify-center active:scale-[0.98]" asChild>
-                        <a href="https://wa.me/59175542604" target="_blank" rel="noreferrer">
+                        <a
+                          href={`https://wa.me/59175542604?text=${d.waMsg}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           Ver Itinerario <ChevronRight className="size-4" />
                         </a>
                       </Button>
