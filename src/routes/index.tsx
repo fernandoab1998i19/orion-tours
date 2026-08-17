@@ -121,7 +121,7 @@ const destinos = [
     img: salvadorCard,
     kicker: "Destino 04 • Cuna de la Cultura",
     title: "Salvador de Bahía: Historia, Color y Tradición",
-    badges: ["Pelourinho Histórico", "Playas Cálidas", "Cultura Afrobravileña"],
+    badges: ["Pelourinho Histórico", "Playas Cálidas", "Cultura Afrobrasileña"],
     text: "Sumérgete en la magia colonial de Bahía. Camina por el Pelourinho, disfruta del faro da Barra y degusta la mejor gastronomía local en una aventura llena de alegría y seguridad.",
     waMsg: "Hola%20Orion%20Tours,%20quiero%20información%20sobre%20el%20paquete%20a%20Salvador%20de%20Bahía.",
   },
