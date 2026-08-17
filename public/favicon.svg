@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7e36" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="140" fill="url(#brandGrad)" />
+  <!-- Plane SVG Icon -->
+  <g transform="translate(106, 106) scale(0.6)">
+    <path fill="#ffffff" d="M480 192H368l-96-160h-48l48 160H144l-48-64H48l32 96-32 96h48l48-64h128l-48 160h48l96-160h112c26.5 0 48-21.5 48-48s-21.5-48-48-48z"/>
+  </g>
+</svg>
