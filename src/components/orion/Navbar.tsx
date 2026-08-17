@@ -6,6 +6,7 @@ const links = [
   { label: "Inicio", href: "#inicio" },
   { label: "Nosotros", href: "#nosotros" },
   { label: "Destinos Estrella", href: "#destinos" },
+  { label: "Agenda tu Cita", href: "#agenda" },
   { label: "Contacto", href: "#contacto" },
 ];
 
