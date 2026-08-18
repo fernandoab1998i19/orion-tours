@@ -3,14 +3,37 @@ import path from "node:path";
 
 const distClient = path.join(process.cwd(), "dist", "client");
 const assetsDir = path.join(distClient, "assets");
+const serverEntryPath = path.join(process.cwd(), "dist", "server", "server.js");
 
-if (fs.existsSync(assetsDir)) {
-  const files = fs.readdirSync(assetsDir);
-  const cssFile = files.find((f) => f.endsWith(".css"));
-  const jsIndexFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js"));
-  const jsRoutesFile = files.find((f) => f.startsWith("routes-") && f.endsWith(".js"));
+async function generatePrerenderedHtml() {
+  try {
+    if (fs.existsSync(serverEntryPath)) {
+      const serverModule = await import(`file://${serverEntryPath.replace(/\\/g, "/")}`);
+      const server = serverModule.default ?? serverModule;
 
-  const htmlContent = `<!DOCTYPE html>
+      if (server && typeof server.fetch === "function") {
+        const response = await server.fetch(new Request("http://localhost/"));
+        const htmlText = await response.text();
+
+        if (htmlText && htmlText.includes("<!DOCTYPE html>")) {
+          fs.writeFileSync(path.join(distClient, "index.html"), htmlText, "utf-8");
+          console.log("Successfully pre-rendered full HTML landing page into dist/client/index.html!");
+          return;
+        }
+      }
+    }
+  } catch (err) {
+    console.warn("SSR pre-rendering fallback notice:", err.message);
+  }
+
+  // Fallback if SSR pre-render fails
+  if (fs.existsSync(assetsDir)) {
+    const files = fs.readdirSync(assetsDir);
+    const cssFile = files.find((f) => f.endsWith(".css"));
+    const jsIndexFile = files.find((f) => f.startsWith("index-") && f.endsWith(".js"));
+    const jsRoutesFile = files.find((f) => f.startsWith("routes-") && f.endsWith(".js"));
+
+    const htmlContent = `<!DOCTYPE html>
 <html lang="es">
   <head>
     <meta charset="utf-8" />
@@ -30,6 +53,9 @@ if (fs.existsSync(assetsDir)) {
   </body>
 </html>`;
 
-  fs.writeFileSync(path.join(distClient, "index.html"), htmlContent, "utf-8");
-  console.log("Successfully generated dist/client/index.html with asset bundles!");
+    fs.writeFileSync(path.join(distClient, "index.html"), htmlContent, "utf-8");
+    console.log("Successfully generated fallback dist/client/index.html!");
+  }
 }
+
+generatePrerenderedHtml();
